@@ -1,11 +1,10 @@
-import { Schema, model, Document, Model, Types } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IFlashcard extends Document {
   question: string;
   answer: string;
   category: string;
-  difficulty?: 'easy' | 'medium' | 'hard';
-  createdBy: Types.ObjectId;
+  createdBy: Types.ObjectId | 'system'; // Allow 'system' for pre-made flashcards
   createdAt: Date;
   lastReviewed?: Date;
 }
@@ -27,15 +26,30 @@ const flashcardSchema = new Schema<IFlashcard>({
     type: String,
     required: true,
     default: 'General',
-    enum: ['General', 'Science', 'History', 'Programming', 'Language'],
-  },
-  difficulty: {
-    type: String,
-    enum: ['easy', 'medium', 'hard'],
-    default: 'medium',
+    enum: [
+      'General',
+      'Science - Physics',
+      'Science - Chemistry',
+      'Science - Biology',
+      'Science - Astronomy',
+      'History - Ancient',
+      'History - Medieval',
+      'History - Modern',
+      'History - World Wars',
+      'Programming - JavaScript',
+      'Programming - Python',
+      'Programming - Java',
+      'Programming - C++',
+      'Programming - Web Development',
+      'Language - English',
+      'Language - Spanish',
+      'Language - French',
+      'Language - German',
+      'Language - Chinese',
+    ],
   },
   createdBy: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.Mixed, // Can be an ObjectId (user) or 'system'
     ref: 'User',
     required: true,
   },
