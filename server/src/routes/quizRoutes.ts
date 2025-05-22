@@ -4,7 +4,8 @@ import {
   submitAnswer, 
   getResults 
 } from '../controllers/quizController';
-import { auth } from '../middleware/auth';
+// Ensure the correct path to the auth middleware
+import { auth } from '../../middleware/auth';
 
 const router = Router();
 

@@ -1,31 +1,30 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
-export interface IFlashcard extends Document {
-  question: string;
-  answer: string;
+export interface IQuiz extends Document {
+  title: string;
+  flashcards: Types.ObjectId[]; // References to Flashcard documents
   category: string;
-  createdBy: Types.ObjectId | 'system'; // Allow 'system' for pre-made flashcards
+  score?: number; // Maximum achievable score for the quiz
+  createdBy: Types.ObjectId | 'system'; // Indicates if it's pre-made or user-created
   createdAt: Date;
-  lastReviewed?: Date;
 }
 
-const flashcardSchema = new Schema<IFlashcard>({
-  question: {
+const quizSchema = new Schema<IQuiz>({
+  title: {
     type: String,
-    required: [true, 'Question is required'],
+    required: true,
     trim: true,
-    maxlength: [500, 'Question cannot exceed 500 characters'],
   },
-  answer: {
-    type: String,
-    required: [true, 'Answer is required'],
-    trim: true,
-    maxlength: [1000, 'Answer cannot exceed 1000 characters'],
-  },
+  flashcards: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Flashcard',
+      required: true,
+    },
+  ],
   category: {
     type: String,
     required: true,
-    default: 'General',
     enum: [
       'General',
       'Science - Physics',
@@ -48,6 +47,10 @@ const flashcardSchema = new Schema<IFlashcard>({
       'Language - Chinese',
     ],
   },
+  score: {
+    type: Number,
+    default: 0, // Default score is 0 if not explicitly set
+  },
   createdBy: {
     type: Schema.Types.Mixed, // Can be an ObjectId (user) or 'system'
     ref: 'User',
@@ -57,12 +60,6 @@ const flashcardSchema = new Schema<IFlashcard>({
     type: Date,
     default: Date.now,
   },
-  lastReviewed: {
-    type: Date,
-  },
 });
 
-// Indexes for faster queries
-flashcardSchema.index({ createdBy: 1, category: 1 });
-
-export const Flashcard = model<IFlashcard>('Flashcard', flashcardSchema);
+export const Quiz = model<IQuiz>('Quiz', quizSchema);
