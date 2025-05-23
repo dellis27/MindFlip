@@ -1,0 +1,155 @@
+@import url('https://fonts.google.com/specimen/Audiowide?preview.text=MINDFLIP&categoryFilters=Appearance:%2FTheme%2FTechno');
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+body {
+  background: linear-gradient(#001c3e,#007ed7, #a7d6ff)
+  }
+
+body {
+  margin: 0;
+  font-family: 'Audiowide', sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+}
+
+.nav-logo {
+  font-size: 50px;
+  font-weight: bold;
+  text-shadow: 2px 2px 7px #008cff;
+}
+
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 2px 2px 7px #008cff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 5rem;
+}
+
+.nav-links li a:hover {
+  opacity: 0.7;
+}
+
+.center-box {
+  height: 500px;
+  padding: 10px;
+  border: 1px black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  }
+
+  .SIGN-UP-BUTTON{
+    background-color: grey;
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 7px #a8d8ff;
+    overflow: hidden;
+    transform: scale(1);
+    cursor: pointer;
+    z-index: 0;
+  }
+  
+  .SIGN-UP-BUTTON ::after{
+    content: "";
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+    z-index: -1;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    filter: blur(8px)
+  }
+
+    .SIGN-UP-BUTTON ::before{
+    content: "";
+    background: linear-gradient(
+      45deg,
+      #a7d6ff, #008cff, #001c3e
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 600%;
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+
+  .LOG-IN-BUTTON{
+    background: linear-gradient(#b0b0b0, #000000);
+    border: 1px solid black;
+    box-shadow: 2px 2px 7px #a8d8ff;
+  }
+
+ 
+
+
+
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
