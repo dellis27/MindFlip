@@ -6,8 +6,8 @@ import {
   updateDeck,
   deleteDeck,
 } from '../controllers/deckController';
-import { authenticate } from '../middleware/authMiddleware';
-import { validateDeckInput } from '../middleware/validationMiddleware';
+import { authenticate } from '../../middleware/authMiddleware';
+import { validateDeckInput } from '../../middleware/validationMiddleware';
 
 const router = Router();
 

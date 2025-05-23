@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { CustomError as RouteCustomError } from '../routes/index';
+import { CustomError as RouteCustomError } from '../api/routes/index';
 
 // Middleware to handle 404 Not Found errors
 export const notFound = (req: Request, res: Response, next: NextFunction) => {
