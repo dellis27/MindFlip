@@ -137,3 +137,6 @@ dist
 
 # Distribution folder
 dist
+
+#.gitignore
+.gitignore
