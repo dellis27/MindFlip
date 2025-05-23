@@ -15,7 +15,7 @@ const router = Router();
 router.use(authenticate);
 
 // GET /api/flashcards
-router.get('/', getFlashcards);
+router.get('/', getFlashcards); 
 
 // POST /api/flashcards
 router.post('/', validateFlashcardInput, createFlashcard);

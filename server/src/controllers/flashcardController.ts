@@ -1,7 +1,15 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { Flashcard } from '../models/Flashcard';
 import { ApiError } from '../utils/ApiError';
 import { Types } from 'mongoose';
+
+interface AuthenticatedRequest extends Request {
+  user?: {
+    _id: Types.ObjectId;
+    username: string;
+    email: string;
+  };
+}
 
 interface FlashcardInput {
   question: string;
@@ -15,10 +23,18 @@ interface FlashcardInput {
  * @route   POST /api/flashcards
  * @access  Private
  */
-export const createFlashcard = async (req: Request, res: Response) => {
+export const createFlashcard = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { question, answer, category, difficulty }: FlashcardInput = req.body;
-    const userId = req.user!._id;
+    const userId = req.user?._id;
+
+    if (!userId) {
+      throw new ApiError(401, 'Not authenticated');
+    }
 
     if (!question || !answer) {
       throw new ApiError(400, 'Question and answer are required');
@@ -37,16 +53,10 @@ export const createFlashcard = async (req: Request, res: Response) => {
       question: flashcard.question,
       answer: flashcard.answer,
       category: flashcard.category,
-      difficulty: flashcard.difficulty,
       createdAt: flashcard.createdAt
     });
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json({ error: error.message });
-    } else {
-      console.error('Create flashcard error:', error);
-      res.status(500).json({ error: 'Failed to create flashcard' });
-    }
+    next(error);
   }
 };
 
@@ -55,12 +65,20 @@ export const createFlashcard = async (req: Request, res: Response) => {
  * @route   GET /api/flashcards
  * @access  Private
  */
-export const getFlashcards = async (req: Request, res: Response) => {
+export const getFlashcards = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const userId = req.user!._id;
+    const userId = req.user?._id;
     const { category } = req.query;
 
-    const query: any = { createdBy: userId };
+    if (!userId) {
+      throw new ApiError(401, 'Not authenticated');
+    }
+
+    const query: Record<string, any> = { createdBy: userId };
     if (category) query.category = category;
 
     const flashcards = await Flashcard.find(query)
@@ -69,8 +87,7 @@ export const getFlashcards = async (req: Request, res: Response) => {
 
     res.status(200).json(flashcards);
   } catch (error) {
-    console.error('Get flashcards error:', error);
-    res.status(500).json({ error: 'Failed to get flashcards' });
+    next(error);
   }
 };
 
@@ -79,11 +96,26 @@ export const getFlashcards = async (req: Request, res: Response) => {
  * @route   GET /api/flashcards/:id
  * @access  Private
  */
-export const getFlashcardById = async (req: Request, res: Response) => {
+export const getFlashcardById = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
+    const userId = req.user?._id;
+    const flashcardId = req.params.id;
+
+    if (!userId) {
+      throw new ApiError(401, 'Not authenticated');
+    }
+
+    if (!Types.ObjectId.isValid(flashcardId)) {
+      throw new ApiError(400, 'Invalid flashcard ID');
+    }
+
     const flashcard = await Flashcard.findOne({
-      _id: req.params.id,
-      createdBy: req.user!._id
+      _id: flashcardId,
+      createdBy: userId
     });
 
     if (!flashcard) {
@@ -95,16 +127,10 @@ export const getFlashcardById = async (req: Request, res: Response) => {
       question: flashcard.question,
       answer: flashcard.answer,
       category: flashcard.category,
-      difficulty: flashcard.difficulty,
       createdAt: flashcard.createdAt
     });
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json({ error: error.message });
-    } else {
-      console.error('Get flashcard error:', error);
-      res.status(500).json({ error: 'Failed to get flashcard' });
-    }
+    next(error);
   }
 };
 
@@ -113,11 +139,19 @@ export const getFlashcardById = async (req: Request, res: Response) => {
  * @route   PUT /api/flashcards/:id
  * @access  Private
  */
-export const updateFlashcard = async (req: Request, res: Response) => {
+export const updateFlashcard = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const updates: Partial<FlashcardInput> = req.body;
+    const userId = req.user?._id;
     const flashcardId = req.params.id;
-    const userId = req.user!._id;
+    const updates: Partial<FlashcardInput> = req.body;
+
+    if (!userId) {
+      throw new ApiError(401, 'Not authenticated');
+    }
 
     if (!Types.ObjectId.isValid(flashcardId)) {
       throw new ApiError(400, 'Invalid flashcard ID');
@@ -138,16 +172,10 @@ export const updateFlashcard = async (req: Request, res: Response) => {
       question: flashcard.question,
       answer: flashcard.answer,
       category: flashcard.category,
-      difficulty: flashcard.difficulty,
       updatedAt: flashcard.updatedAt
     });
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json({ error: error.message });
-    } else {
-      console.error('Update flashcard error:', error);
-      res.status(500).json({ error: 'Failed to update flashcard' });
-    }
+    next(error);
   }
 };
 
@@ -156,10 +184,18 @@ export const updateFlashcard = async (req: Request, res: Response) => {
  * @route   DELETE /api/flashcards/:id
  * @access  Private
  */
-export const deleteFlashcard = async (req: Request, res: Response) => {
+export const deleteFlashcard = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
+    const userId = req.user?._id;
     const flashcardId = req.params.id;
-    const userId = req.user!._id;
+
+    if (!userId) {
+      throw new ApiError(401, 'Not authenticated');
+    }
 
     if (!Types.ObjectId.isValid(flashcardId)) {
       throw new ApiError(400, 'Invalid flashcard ID');
@@ -176,11 +212,6 @@ export const deleteFlashcard = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Flashcard deleted successfully' });
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json({ error: error.message });
-    } else {
-      console.error('Delete flashcard error:', error);
-      res.status(500).json({ error: 'Failed to delete flashcard' });
-    }
+    next(error);
   }
 };

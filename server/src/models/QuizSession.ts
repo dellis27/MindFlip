@@ -2,7 +2,7 @@ import { Schema, model, Document, Types } from 'mongoose';
 import { Flashcard } from '../models/Flashcard'; // Adjust the path as needed
 
 interface IQuiz extends Document {
-    user?: Types.ObjectId; // Optional for pre-made quizzes
+    user: Types.ObjectId; //username must be created in order to access flashcards and quizzes
     title: string;
     flashcards: Types.ObjectId[];
     category: string; // Subject or category
