@@ -2,7 +2,7 @@ import { Router } from 'express';
 import authRoutes from './authRoutes';
 import flashcardRoutes from './flashcardRoutes';
 import deckRoutes from './deckRoutes';
-import { notFound, errorHandler } from '../middlewares/errorMiddleware';
+import { notFound, errorHandler } from '../middleware/errorMiddleware';
 
 const router = Router();
 

@@ -3,7 +3,7 @@ import { Flashcard } from './Flashcard';
 
 export interface IDeck extends Document {
   name: string;
-  description?: string;
+  description: string;
   flashcards: Types.ObjectId[];
   createdBy: Types.ObjectId;
   isPublic: boolean;

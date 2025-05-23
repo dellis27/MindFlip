@@ -5,7 +5,7 @@ import {
   getResults 
 } from '../controllers/quizController';
 // Ensure the correct path to the auth middleware
-import { auth } from '../../middleware/auth';
+import { auth } from '../..';
 
 const router = Router();
 

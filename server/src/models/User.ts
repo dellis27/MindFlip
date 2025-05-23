@@ -17,6 +17,15 @@ interface UserModel extends Model<IUser> {
   login(email: string, password: string): Promise<IUser>;
 }
 
+export interface IUser {
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  role: 'user' | 'admin'; // Add the role property
+  // Add other properties here
+}
+
 const userSchema = new Schema<IUser, UserModel>({
   username: {
     type: String,
