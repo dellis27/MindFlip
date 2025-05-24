@@ -3,7 +3,7 @@ import {
   startQuiz, 
   submitAnswer, 
   getResults 
-} from '../controllers/quizController';
+} from '../../controllers/quizController';
 // Ensure the correct path to the auth middleware
 import { auth } from '../..';
 

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { Deck } from '../models/Deck';
-import { Flashcard } from '../models/Flashcard';
+import { Deck } from '../../models/Deck';
+import { Flashcard } from '../../models/Flashcard';
 import { ApiError } from '../utils/ApiError';
 
 interface AuthenticatedRequest extends Request {

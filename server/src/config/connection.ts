@@ -1,6 +1,8 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { User, Flashcard, Deck } from ''; // Adjust the import path as necessary
+import { User as UserModel } from '../models/User';
 
+// Use the alias for the imported User
+const user = new UserModel();
 
 
 // Correct the export to match the import in server.ts
@@ -69,7 +71,7 @@ const DeckSchema = new Schema<IDeck>({
 
 });
 
-constels';
+// Removed invalid line
 
 const connectDB = async (): Promise<void> => {
   try {
@@ -85,4 +87,4 @@ const connectDB = async (): Promise<void> => {
   }
 };
 
-export { connectDB, User, Flashcard, Deck };
+export { connectDB, User, Flashcard, IDeck };
