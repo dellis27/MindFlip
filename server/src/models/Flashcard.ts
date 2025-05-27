@@ -65,4 +65,4 @@ const flashcardSchema = new Schema<IFlashcard>({
 // Indexes for faster queries
 flashcardSchema.index({ createdBy: 1, category: 1 });
 
-export const Flashcard = model<IFlashcard>('Flashcard', flashcardSchema);
+export default flashcardSchema;
