@@ -75,7 +75,7 @@ const resolvers = {
     },
 
         // Save a deck to the user's savedDeck array
-    saveDeck: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
+    createDeck: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
       }
@@ -93,12 +93,22 @@ const resolvers = {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
       }
       const deck = await Deck.findByIdAndDelete(deckId)
-      return deck;   
-        
-     
+      return deck;  
     },
 
+            // Update a deck to the user's savedDeck array
+    updateDeck: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
+      if (!context.user) {
+        throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
+        
+      }
+        return await Deck.findByIdAndUpdate(
+        input.deckId,
+        { $addToSet: { flashcards: input.flashcard } }, 
+        { new: true }
+      );
   },
+  }
 };
 
 export default resolvers;

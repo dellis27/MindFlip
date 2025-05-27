@@ -49,6 +49,11 @@ const typeDefs = gql`
     isPublic: Boolean
   }
 
+  input UpdateDeckInput {
+    flashcard: ID!
+    deckId: ID!
+  }
+
   input FlashcardUpdateInput {
     question: String
     answer: String
@@ -65,8 +70,9 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth!
     saveFlashcard(input: FlashcardInput!): User
     removeFlashcard(flashcardId: ID!): User  
-    saveDeck(input: DeckInput!): Deck
+    createDeck(input: DeckInput!): Deck
     removeDeck(deckId: ID!): Deck
+    updateDeck(input: UpdateDeckInput!): Deck
   }
 `;
 

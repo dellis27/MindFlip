@@ -5,12 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "type-check": "tsc --noEmit",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.1",
+    "bootstrap": "^5.2.3",
+    "graphql": "^16.10.0",
+    "jwt-decode": "^4.0.0",
     "react": "^19.1.0",
+    "react-bootstrap": "^2.7.4",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0"
   },
