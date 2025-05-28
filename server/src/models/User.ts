@@ -6,12 +6,19 @@ import bcrypt from 'bcryptjs';
 import flashcardSchema from './Flashcard.js';
 import type { IFlashcard } from './Flashcard.js';
 
+// Rename the local declaration
+const LocalUser = {
+  name: 'John Doe',
+};
+
 // Interface for TypeScript
+
 export interface UserDocument extends Document {
   _id: string;
   username: string;
   email: string;
   password: string;
+
   savedFlashcards: IFlashcard[];
   createdAt: Date;
   isCorrectPassword(password: string): Promise<boolean>;
@@ -29,6 +36,7 @@ const userSchema = new Schema<UserDocument>(
     type: String,
     required: true,
     unique: true,
+
     match: [/.+@.+\..+/, 'Must use a valid email address'],
   },
   password: {
@@ -52,6 +60,7 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
 
+
   next();
 });
 
@@ -68,3 +77,4 @@ userSchema.virtual('FlashCardCount').get(function () {
 const User = model<UserDocument>('User', userSchema);
 
 export default User;
+

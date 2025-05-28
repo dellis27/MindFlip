@@ -1,4 +1,5 @@
 import express from 'express';
+
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { ApolloServer } from '@apollo/server';

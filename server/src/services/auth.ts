@@ -13,6 +13,7 @@ const secretKey = process.env.JWT_SECRET_KEY || 'default_secret';
 export const getUserFromToken = (token: string | undefined): JwtPayload | null => {
   if (!token) return null;
 
+
   try {
     const decoded = jwt.verify(token, secretKey) as JwtPayload;
     return decoded;

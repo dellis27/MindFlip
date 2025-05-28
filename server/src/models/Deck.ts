@@ -2,7 +2,7 @@ import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IDeck extends Document {
   name: string;
-  description?: string;
+  description: string;
   flashcards: Types.ObjectId[];
   createdBy: Types.ObjectId;
   isPublic: Boolean;

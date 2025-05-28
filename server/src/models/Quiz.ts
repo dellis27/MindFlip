@@ -4,7 +4,7 @@ export interface IQuiz extends Document {
   title: string;
   flashcards: Types.ObjectId[]; // References to Flashcard documents
   category: string;
-  score?: number; // Maximum achievable score for the quiz
+  score: number; // Maximum achievable score for the quiz
   createdBy: Types.ObjectId | 'system'; // Indicates if it's pre-made or user-created
   createdAt: Date;
 }
