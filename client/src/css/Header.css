@@ -16,3 +16,31 @@
     max-width: 100px;
     max-height: 100px;
 }
+.header-nav{
+    display: inline-block;
+    position: fixed;
+    right:5px;
+}
+
+.header-nav ul{
+ display: flex;
+ flex-direction: row;
+
+}
+.header-nav ul li {
+    margin: 25px;
+    /* padding:15px; */
+
+}
+.button-box{
+    display: block;
+}
+.login-button {
+    display: flex;
+    position: absolute;
+    flex-wrap: wrap ;
+    right: 3%;
+    height:120px;
+    width: 120px;
+
+}
