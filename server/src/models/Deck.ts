@@ -1,12 +1,11 @@
-import { Schema, model, Document, Model, Types } from 'mongoose';
-import { Flashcard } from './Flashcard';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IDeck extends Document {
   name: string;
   description: string;
   flashcards: Types.ObjectId[];
   createdBy: Types.ObjectId;
-  isPublic: boolean;
+  isPublic: Boolean;
   createdAt: Date;
 }
 
@@ -40,12 +39,6 @@ const deckSchema = new Schema<IDeck>({
     type: Date,
     default: Date.now,
   },
-});
-
-// Cascade delete flashcards when deck is deleted
-deckSchema.pre<IDeck>('deleteOne', async function (next) {
-  await Flashcard.deleteMany({ _id: { $in: this.flashcards } });
-  next();
 });
 
 export const Deck = model<IDeck>('Deck', deckSchema);

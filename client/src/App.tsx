@@ -9,7 +9,6 @@ import { Category, FlashCards, HomePage, List, NotFound, Quiz, Login } from './p
 import Layout from './components/Layout';
 
 function App() {
-
   return (
     <>
   <nav className="navbar">
@@ -49,8 +48,10 @@ function App() {
       </BrowserRouter>
 
       
+
     </>
   );
 }
+
 
 export default App
