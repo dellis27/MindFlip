@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, Document, Types } from 'mongoose';
 
 export interface IFlashcard extends Document {
   question: string;

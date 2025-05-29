@@ -2,6 +2,7 @@ import { GraphQLError } from 'graphql';
 import User from '../models/User.js';
 import { signToken } from '../services/auth.js';
 import { Deck } from '../models/Deck.js';
+import { Quiz } from '../models/Quiz.js';
 
 const resolvers = {
   Query: {
@@ -88,7 +89,7 @@ const resolvers = {
       );
     },
 
-        // Save a deck to the Database
+        // Create a deck to the Database
     createDeck: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
@@ -120,6 +121,18 @@ const resolvers = {
         input.deckId,
         { $addToSet: { flashcards: input.flashcard } }, 
         { new: true }
+      );
+    },
+            // Create a Quiz to the Database
+    createQuiz: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
+      if (!context.user) {
+        throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
+      }
+
+      return await Quiz.create({
+          ...input,
+          createdBy: context.user._id 
+        } 
       );
   },
   }

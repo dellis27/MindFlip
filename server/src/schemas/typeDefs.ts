@@ -31,6 +31,15 @@ const typeDefs = gql`
     createdAt: Date!
   }
 
+  type Quiz {
+    _id: ID!
+    title: String!
+    decks: [ID!]!
+    score: Int!
+    createdBy: String!
+    createdAt: Date!
+  }
+
   type Auth {
     token: String!
     user: User!
@@ -54,6 +63,14 @@ const typeDefs = gql`
     deckId: ID!
   }
 
+  input QuizInput {
+    title: String!
+    decks: [ID!]!
+    score: Int!
+    createdBy: String!
+    createdAt: Date!
+  }
+
   input FlashcardUpdateInput {
     question: String
     answer: String
@@ -74,6 +91,7 @@ const typeDefs = gql`
     createDeck(input: DeckInput!): Deck
     removeDeck(deckId: ID!): Deck
     updateDeck(input: UpdateDeckInput!): Deck
+    createQuiz(input: QuizInput!): Quiz
   }
 `;
 
