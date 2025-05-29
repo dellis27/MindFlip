@@ -69,7 +69,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth!
     addUser(username: String!, email: String!, password: String!): Auth!
     saveFlashcard(input: FlashcardInput!): User
-    removeFlashcard(flashcardId: ID!): User  
+    removeFlashcard(flashcardId: ID!): User 
+    removeFlashcardfromDeck(input: UpdateDeckInput!): Deck  
     createDeck(input: DeckInput!): Deck
     removeDeck(deckId: ID!): Deck
     updateDeck(input: UpdateDeckInput!): Deck
