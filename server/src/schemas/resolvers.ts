@@ -61,7 +61,7 @@ const resolvers = {
       );
     },
 
-    // Remove a saved flashcard by flashcardId
+    // Remove a saved flashcard from user by flashcardId
     removeFlashcard: async (_parent: any, { flashcardId }: { flashcardId: string }, context: { user?: any }) => {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
@@ -74,7 +74,21 @@ const resolvers = {
       );
     },
 
-        // Save a deck to the user's savedDeck array
+    
+    // Remove a saved flashcard from a Deck by flashcardId
+    removeFlashcardfromDeck: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
+      if (!context.user) {
+        throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
+      }
+
+      return await Deck.findByIdAndUpdate(
+        input.deckId,
+        { $pull: { flashcards: { _id: input.flashcard } } }, // Removes flashcard by flashcardId
+        { new: true }
+      );
+    },
+
+        // Save a deck to the Database
     createDeck: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
@@ -87,7 +101,7 @@ const resolvers = {
       );
     },
 
-        // Remove a saved flashcard by flashcardId
+        // Remove a saved Deck by DeckdId
     removeDeck: async (_parent: any, { deckId }: { deckId: string }, context: { user?: any }) => {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
@@ -96,7 +110,7 @@ const resolvers = {
       return deck;  
     },
 
-            // Update a deck to the user's savedDeck array
+            // Update a deck to the Database
     updateDeck: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });

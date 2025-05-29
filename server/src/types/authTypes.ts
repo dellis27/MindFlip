@@ -33,6 +33,7 @@ export interface ChangePasswordInput {
   newPassword: string;
 }
 
+// ====================== RESPONSE TYPES ======================
 export interface AuthResponse {
   user: UserResponse;
   token: string;
@@ -42,12 +43,12 @@ export interface LoginResponse extends AuthResponse {
   refreshToken?: string;
 }
 
-
+// ====================== EXPRESS REQUEST EXTENSIONS ======================
 declare global {
   namespace Express {
     interface Request {
       user?: {
-       _id: string;
+        _id: Types.ObjectId;
         username: string;
         email: string;
         role: 'user' | 'admin';

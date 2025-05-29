@@ -11,9 +11,6 @@
   "include": ["src"],
   "exclude": [
     "node_modules",
-    "src/controllers",
-    "src/models",
-    "src/routes",
     "src/types"
   ],
   "typeRoots": ["./node_modules/@types", "./src/types"],
