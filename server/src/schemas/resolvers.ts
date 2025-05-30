@@ -123,7 +123,7 @@ const resolvers = {
         { new: true }
       );
     },
-            // Create a Quiz to the Database
+            // Create a Quiz in the Database
     createQuiz: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
@@ -131,10 +131,57 @@ const resolvers = {
 
       return await Quiz.create({
           ...input,
-          createdBy: context.user._id 
+          createdBy: context.user._id
         } 
       );
   },
+              // Update a Quiz in the Database
+    updateQuiz: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
+      if (!context.user) {
+        throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
+        
+      }
+      try {
+        console.log('Updating quiz with input:', input);
+        return await Quiz.findByIdAndUpdate(
+        input.quizId,
+        { $addToSet: { decks: input.deckId } }, 
+        { new: true }
+        )
+      }
+      catch (error) {
+        console.error('Error updating quiz:', error);
+        return
+      }     
+    },
+
+                  // Update a Quiz in the Database
+    deletedeckfromQuiz: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
+      if (!context.user) {
+        throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
+        
+      }
+      try {
+        console.log('Deleting quiz with input:', input);
+        return await Quiz.findByIdAndUpdate(
+        input.quizId,
+        { $pull: { decks: input.deckId } }, 
+        { new: true }
+        )
+      }
+      catch (error) {
+        console.error('Error updating quiz:', error);
+        return
+      }     
+    },
+            // Remove a saved Quiz by QuizId
+    removeQuiz: async (_parent: any, { quizId }: { quizId: string }, context: { user?: any }) => {
+      if (!context.user) {
+        throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
+      }
+      const quiz = await Quiz.findByIdAndDelete(quizId)
+      return quiz;  
+    },
   }
 };
 
