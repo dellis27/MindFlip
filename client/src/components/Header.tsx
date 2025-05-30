@@ -1,36 +1,68 @@
-import '../css/Header.css'
+import '../css/Header.css';
 import { Link } from "react-router-dom";
-
+import { useState, useEffect } from 'react';
+import { FiLogIn } from "react-icons/fi";
+import { TfiWrite } from "react-icons/tfi";
 
 function Header() {
-    return (
-        <header className="headerbody">
+  const [theme, setTheme] = useState('light');
 
-            <img className='header-logo' src='/brain.svg' alt='MindFlip Logo'/>
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
-            <div>{/*  Div for main body text */}
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <header className="headerbody">
+      <div className="header-content">
+        <div className="header-logo-title">
+          <img
+            className="header-logo"
+            src="/brain.svg"
+            alt="MindFlip Logo"
+          />
+          <div className="header-titles">
             <h1>MindFlip</h1>
-            <h3> An all in one study guide</h3>
-            </div>
+            <h3>An all-in-one study guide</h3>
+          </div>
+        </div>
 
-            <nav className='header-nav'> {/* This will be the nav containing the information commented out on App.tsx, for testing purposes. This Nav information should be living inside of the header or the footer component.*/}
-                <ul>
-                    <li><Link to='/about'>ABOUT-US</Link></li>
-                    <li><Link to='/contact'>CONTACT</Link></li>
-                    <li></li>
-                </ul>
-            </nav>
+        <nav className="header-nav">
+          <ul>
+            <li><Link to="/about">ABOUT US</Link></li>
+            <li><Link to="/contact">CONTACT</Link></li>
+          </ul>
+        </nav>
 
-            <div className='button-box'>
-            <button className='login-button'> {/*Login button, nested in the header, this might need to be its own component to correctly handle the cases of users being logged in/out*/}
-            <img className='login-icon' src='../assets/login.svg'/>
-            <h3>Login</h3>
-            <h3>Sign-Up</h3>
-            </button>
-            </div>
-            
-        </header>
-    )
-};
+        <div className="button-box">
+          <button type="button" className="login-button">
+            <span className="login-icon">
+              <FiLogIn aria-hidden="true" />
+            </span>
+            <span>Login</span>
+          </button>
+
+          <button type="button" className="signup-button">
+            <span className="signup-icon">
+              <TfiWrite aria-hidden="true" />
+            </span>
+            <span>Sign Up</span>
+          </button>
+
+          <button
+            type="button"
+            className="theme-toggle-button"
+            onClick={toggleTheme}
+          >
+            {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
 
 export default Header;

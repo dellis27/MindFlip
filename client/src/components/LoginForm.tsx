@@ -29,6 +29,9 @@ const LoginForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       handleModalClose(); // Close modal on successful login
     } catch (err) {
       console.error('Login error:', err);
+      if (error) {
+        console.error('GraphQL error:', error.message);
+      }
       setShowAlert(true);
     }
    setUserFormData({ email: '', password: '' });

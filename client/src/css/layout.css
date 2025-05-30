@@ -1,6 +1,236 @@
-.layout-main{
+/* Theme Variables */
+:root {
+    --accent-color: #0b9df8;
+    --primary-color: #0b9df8;
+    --primary-light: #4dbefc;
+    --text-color: #ffffff;
+    --text-light: #ffffff;
+    --header-border: #e0f2fe;
+    --header-dark-bg: #222;
+    --header-dark-border: #333;
+  }
+  
+  [data-theme="dark"] {
+    --accent-color: #333;
+    --primary-color: #333;
+    --primary-light: #4b4b4b;
+    --text-color: #ffffff;
+    --text-light: #ffffff;
+    --header-border: #444;
+    --header-dark-bg: #222;
+    --header-dark-border: #444;
+  }
+  
+  /* Layout container */
+  .layout-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    height: calc(100vh - 120px);
+    width: 60px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text-light);
+    transition: background-color 0.2s ease;
+  }
+  
+  .sidebar a:hover {
+    background-color: var(--primary-light);
+  }
+  
+  .icon {
+    margin-right: 12px;
+    font-size: 22px;
+  }
+  
+  .icon-text {
+    display: none;
+    font-size: 16px;
+  }
+  
+  .sidebar.open {
+    width: 220px;
+  }
+  
+  .sidebar.open .icon-text {
+    display: inline;
+  }
+  
+  /* Layout main */
+  .layout-main {
+    display: flex;
     width: 100vw;
     position: relative;
     margin-top: 120px;
-    background-color: rgb(215, 228, 248);
-}
+    background: linear-gradient(to bottom right, #c2e9fb, #a1c4fd);
+  }
+  
+  /* Main content */
+  main {
+    flex: 1;
+    padding: 20px;
+    margin-left: 60px;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .sidebar.open ~ main {
+    margin-left: 220px;
+  }
+  
+  /* Footer */
+  footer {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  /* Header */
+  .headerbody {
+    background-color: var(--accent-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0 2rem;
+    height: 120px;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid var(--header-border);
+    box-sizing: border-box;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .header-logo-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .header-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+  
+  .header-titles h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: var(--text-color);
+  }
+  
+  .header-titles h3 {
+    font-size: 1rem;
+    margin: 0;
+    color: var(--text-color);
+    font-weight: 400;
+  }
+  
+  .header-nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .header-nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .header-nav a:hover {
+    color: var(--primary-light);
+  }
+  
+  .button-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .login-button,
+  .signup-button,
+  .theme-toggle-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover,
+  .signup-button:hover,
+  .theme-toggle-button:hover {
+    background-color: var(--primary-light);
+  }
+  
+  .login-icon,
+  .signup-icon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .theme-toggle-button {
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive */
+  @media screen and (max-width: 768px) {
+    .sidebar {
+      width: 50px;
+    }
+    .sidebar.open {
+      width: 180px;
+    }
+    main {
+      padding: 16px;
+      margin-left: 50px;
+    }
+    .sidebar.open ~ main {
+      margin-left: 180px;
+    }
+  }
+  
