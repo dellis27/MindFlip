@@ -94,22 +94,22 @@ body, html {
   padding: 0;
 }
 #welcome-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Center vertically on the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically on the page */
 }
 
 #welcome-message {
-  opacity: 0; /* Initially hidden */
-  transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
 }
 
 .fade-in {
-  opacity: 1; /* Fully visible when faded in */
+    opacity: 1; /* Fully visible when faded in */
 }
 
 .fade-out {
-  opacity: 0; /* Fully hidden when faded out */
+    opacity: 0; /* Fully hidden when faded out */
 }
 
