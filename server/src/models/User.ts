@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 // import validator from 'validator';
 
@@ -15,7 +15,7 @@ export interface UserDocument extends Document {
   savedFlashcards: IFlashcard[];
   createdAt: Date;
   isCorrectPassword(password: string): Promise<boolean>;
-  FlashcardCount: number;
+  flashcardCount: number;
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -61,7 +61,7 @@ userSchema.methods.isCorrectPassword = async function (password: string) {
 };
 
 // when we query a user, we'll also get another field called `FlashCardCount` with the number of saved FlashCards we have
-userSchema.virtual('FlashCardCount').get(function () {
+userSchema.virtual('flashcardCount').get(function () {
   return this.savedFlashcards.length;
 });
 
