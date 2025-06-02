@@ -1,4 +1,3 @@
-/* This default from react */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -6,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #F5FBF9;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -55,30 +54,62 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Light Mode Variables */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+    --primary-color: #265e91;
+    --primary-light: #2972b6;
+    --primary-dark: #1d5a8;
+    --accent-color: #f0bd37;
+    --accent-alt: #ebaa1b;
+    --background-color: #F5FBF9;
+    --text-color: #213547;
+    --text-light: rgba(255, 255, 255, 0.87);
+    --gray: #444;
   }
 }
 
-/* This is what I am adding, just resetting defaults, I should make this its own css file... */
-*{
+/* Dark Mode Variables via data-theme attr toggle */
+[data-theme="dark"] {
+  --primary-color: #1d5a8;
+  --primary-light: #265e91;
+  --primary-dark: #12384f;
+  --accent-color: #ebaa1b;
+  --accent-alt: #f0bd37;
+  --background-color: #242424;
+  --text-color: #ffffff;
+  --text-light: rgba(255, 255, 255, 0.87);
+  --gray: #ccc;
+}
+
+/* Reset */
+* {
   margin: 0;
-  padding:0;
+  padding: 0;
   box-sizing: border-box;
 }
-:root{
-  background-color: #F5FBF9;
-}
 
-body, html{
-  margin:0;
+body, html {
+  margin: 0;
   padding: 0;
 }
+#welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically on the page */
+}
+
+#welcome-message {
+    opacity: 0; /* Initially hidden */
+    transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
+}
+
+.fade-in {
+    opacity: 1; /* Fully visible when faded in */
+}
+
+.fade-out {
+    opacity: 0; /* Fully hidden when faded out */
+}
+
