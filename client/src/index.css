@@ -112,4 +112,87 @@ body, html {
 .fade-out {
     opacity: 0; /* Fully hidden when faded out */
 }
+.flashcards-container {
+  padding: 2rem;
+  text-align: center;
+  background-color: #121212; /* Dark background for container */
+}
 
+.flashcard {
+  background: #222; /* Dark background for flashcard */
+  border: 2px solid #555;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 1rem auto;
+  max-width: 400px;
+  color: #000000; /* Light text color */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+}
+
+.flashcard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #eee; /* Light heading */
+}
+
+.flashcard p {
+  font-size: 1.2rem;
+  color: #ddd; /* Slightly lighter text */
+}
+
+/* Buttons remain same as before */
+.flashcard-controls button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #4f8a8b; /* Mid Blue button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.custom-flashcard {
+  margin-top: 2rem;
+}
+
+.custom-flashcard input {
+  display: block;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  width: 80%;
+}
+
+.custom-flashcard button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #4f8a8b; /* Mid Blue button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.study-link {
+  margin-top: 2rem;
+}
+
+.study-link a {
+  font-size: 1.2rem;
+  color: #0077cc; /* Blue link color */
+  text-decoration: none;
+}
+
+.study-link a:hover {
+  text-decoration: underline;
+}
+.quiz-controls button {
+margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #4f8a8b; /* Mid Blue button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
