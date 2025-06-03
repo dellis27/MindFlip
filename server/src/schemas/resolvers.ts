@@ -3,6 +3,13 @@ import User from '../models/User.js';
 import { signToken } from '../services/auth.js';
 import { Deck } from '../models/Deck.js';
 import { Quiz } from '../models/Quiz.js';
+import Flashcard from '../models/Flashcard.js';
+
+interface AddUserArgs {
+  username: string;
+  email: string;
+  password: string;
+}
 
 const resolvers = {
   Query: {
@@ -11,8 +18,18 @@ const resolvers = {
       if (!context.user) {
         throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
       }
-      return await User.findById(context.user._id);
+      return await User.findById(context.user._id).populate('savedFlashcards');
     },
+      getAllFlashcards: async () => {
+      return await Flashcard.find();
+    },
+      getFlashcardsByCategory: async (_: any, args: { category: string }) => {
+      return await Flashcard.find({ category: args.category });
+    },
+      getCategories: async () => {
+      const categories = await Flashcard.distinct('category');
+      return categories;
+  },
   },
 
   Mutation: {
@@ -29,37 +46,62 @@ const resolvers = {
       return { token, user };
     },
 
-    // Register new user
-    addUser: async (
-      _parent: any,
-       { username, email, password }: { username: string; email: string; password: string }
-      ) => {
-      try {
-      const user = await User.create({ username, email, password });
-      // const token = signToken(user.username, user.email, user._id);
-      const token = signToken(user.username, user.email, user._id);
-      return { token, user };
-      } catch (error) {
-        console.error('Error creating user:', error);
-        throw new GraphQLError('Error creating user', { extensions: { code: 'INTERNAL_SERVER_ERROR' },
-        });
-      }
+     updateFlashcard: async (
+      _: any,
+      { id, question, answer, category }: { id: string; question?: string; answer?: string; category?: string }
+    ) => {
+      const updated = await Flashcard.findByIdAndUpdate(
+        id,
+        { $set: { question, answer, category } },
+        { new: true }
+      );
+      if (!updated) throw new Error("Flashcard not found");
+      return updated;
     },
+
+    deleteFlashcard: async (_: any, { id }: { id: string }) => {
+      const deleted = await Flashcard.findByIdAndDelete(id);
+      if (!deleted) throw new Error("Flashcard not found");
+      return deleted;
+    },
+
+    // Register new user
+    addUser: async (_parent: unknown, { username, email, password }: AddUserArgs) => {
+      try {
+        const user = await User.create({ username, email, password });
+        const token = signToken(user.username, user.email, user._id);
+        return { token, user };
+      } catch (error: any) {
+        console.error('❌ Error creating user:', error.message);
+        console.error('🪵 Full Error:', error);
+        throw new GraphQLError('Error creating user', {
+          extensions: { code: 'INTERNAL_SERVER_ERROR' },
+        });
+  }
+},
+
 
     // Save a flashcard to the user's savedFlashcards array
     saveFlashcard: async (_parent: any, { input }: { input: any }, context: { user?: any }) => {
       if (!context.user) {
-        throw new GraphQLError('You must be logged in', { extensions: { code: 'UNAUTHENTICATED' } });
-      }
+        throw new GraphQLError('You must be logged in', {
+          extensions: { code: 'UNAUTHENTICATED' }
+        });
+      }   
 
-      return await User.findByIdAndUpdate(
-        context.user._id,
-        { $addToSet: { savedFlashcards: {
+      const newCard = await Flashcard.create({
           ...input,
-          createdBy: context.user._id 
-        } } }, 
+        createdBy: context.user._id,
+      });
+
+      await User.findByIdAndUpdate(
+        context.user._id,
+        { $addToSet: { savedFlashcards: newCard._id } },
         { new: true }
-      );
+        );
+
+        const populatedCard = await Flashcard.findById(newCard._id).populate('createdBy');
+      return populatedCard;
     },
 
     // Remove a saved flashcard from user by flashcardId
@@ -135,7 +177,18 @@ const resolvers = {
         } 
       );
   },
-  }
+  },
+  Flashcard: {
+
+    createdBy: async (parent: any) => {
+    
+    if (typeof parent.createdBy === 'object') {
+      return parent.createdBy;
+    }
+  
+    return await User.findById(parent.createdBy);
+  },
+}
 };
 
 export default resolvers;

@@ -1,4 +1,4 @@
-import { Schema, Document, Types } from 'mongoose';
+import { Schema, Document, Types, model } from 'mongoose';
 
 export interface IFlashcard extends Document {
   question: string;
@@ -65,4 +65,5 @@ const flashcardSchema = new Schema<IFlashcard>({
 // Indexes for faster queries
 flashcardSchema.index({ createdBy: 1, category: 1 });
 
-export default flashcardSchema;
+const Flashcard = model<IFlashcard>('Flashcard', flashcardSchema);
+export default Flashcard;

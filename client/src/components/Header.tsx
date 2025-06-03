@@ -1,11 +1,12 @@
 import '../css/Header.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { FiLogIn } from "react-icons/fi";
 import { TfiWrite } from "react-icons/tfi";
 
 function Header() {
   const [theme, setTheme] = useState('light');
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -14,6 +15,10 @@ function Header() {
   const toggleTheme = () => {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
+
+  const handleLoginClick = () => navigate('/login');
+  const handleSignupClick = () => navigate('/signup');
+
 
   return (
     <header className="headerbody">
@@ -38,14 +43,14 @@ function Header() {
         </nav>
 
         <div className="button-box">
-          <button type="button" className="login-button">
+          <button type="button" className="login-button" onClick={handleLoginClick}>
             <span className="login-icon">
               <FiLogIn aria-hidden="true" />
             </span>
             <span>Login</span>
           </button>
 
-          <button type="button" className="signup-button">
+          <button type="button" className="signup-button" onClick={handleSignupClick}>
             <span className="signup-icon">
               <TfiWrite aria-hidden="true" />
             </span>

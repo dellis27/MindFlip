@@ -16,7 +16,7 @@ const typeDefs = gql`
     question: String!
     answer: String!
     category: String!
-    createdBy: String!
+    createdBy: User!
     createdAt: Date!
     lastReviewed: Date
   }
@@ -26,7 +26,7 @@ const typeDefs = gql`
     name: String!
     description: String
     flashcards: [ID!]!
-    createdBy: String!
+    createdBy: User!
     isPublic: Boolean!
     createdAt: Date!
   }
@@ -80,18 +80,24 @@ const typeDefs = gql`
 
   type Query {
     me: User
+    getAllFlashcards: [Flashcard]!
+    getFlashcardsByCategory(category: String!): [Flashcard]!
+    getCategories: [String!]!
+
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth!
     addUser(username: String!, email: String!, password: String!): Auth!
-    saveFlashcard(input: FlashcardInput!): User
+    saveFlashcard(input: FlashcardInput!): Flashcard!
     removeFlashcard(flashcardId: ID!): User 
     removeFlashcardfromDeck(input: UpdateDeckInput!): Deck  
     createDeck(input: DeckInput!): Deck
     removeDeck(deckId: ID!): Deck
     updateDeck(input: UpdateDeckInput!): Deck
     createQuiz(input: QuizInput!): Quiz
+    updateFlashcard(id: ID!, question: String, answer: String, category: String): Flashcard!
+    deleteFlashcard(id: ID!): Flashcard!
   }
 `;
 

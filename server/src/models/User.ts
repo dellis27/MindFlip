@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 // import validator from 'validator';
 
 // import schema from Flasshcard.js
-import flashcardSchema from './Flashcard.js';
 import type { IFlashcard } from './Flashcard.js';
 
 // Interface for TypeScript
@@ -35,7 +34,7 @@ const userSchema = new Schema<UserDocument>(
     type: String,
     required: true,
   },
-  savedFlashcards: [flashcardSchema],
+  savedFlashcards: [{type: Schema.Types.ObjectId, ref: 'Flashcard'}],
 },
 
 {

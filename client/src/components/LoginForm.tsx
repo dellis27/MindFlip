@@ -5,7 +5,8 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/graphql';
 import Auth from '../utils/auth';
 
-const LoginForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
+const LoginForm = () => {
+  
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -26,7 +27,8 @@ const LoginForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       }
 
       Auth.login(data.login.token);
-      handleModalClose(); // Close modal on successful login
+      
+
     } catch (err) {
       console.error('Login error:', err);
       if (error) {
@@ -43,10 +45,10 @@ const LoginForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your login credentials!
         </Alert>
-        <Form.Group className='mb-3'>
+        <Form.Group>
           <Form.Label htmlFor='email'>Email</Form.Label>
           <Form.Control
-            type='text'
+            type='email'
             placeholder='Your email'
             name='email'
             onChange={handleInputChange}
@@ -80,3 +82,4 @@ const LoginForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
 };
 
 export default LoginForm;
+

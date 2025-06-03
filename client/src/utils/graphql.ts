@@ -50,18 +50,21 @@ export const LOGIN_USER = gql`
 
 // Mutation to save a book
 export const SAVE_FLASHCARD = gql`
-  mutation Saveflashcard$input: flashcardInput!) {
-    saveflashcard(input: $input) {
+  mutation SaveFlashcard($input: FlashcardInput!) {
+    saveFlashcard(input: $input) {
       _id
-      username
-      savedflashcard {
-        flashcardId
-        question
-        answer
+      question
+      answer
+      category
+      createdAt
+      createdBy {
+        _id
+        username
       }
     }
   }
 `;
+
 
 // Mutation to remove a book
 export const REMOVE_FLASHCARD = gql`
@@ -73,6 +76,55 @@ export const REMOVE_FLASHCARD = gql`
         flashcardId
         question
       }
+    }
+  }
+`;
+
+export const GET_FLASHCARDS = gql`
+  query GetAllFlashcards {
+    getAllFlashcards {
+      _id
+      question
+      answer
+      category
+    }
+  }
+`;
+
+export const GET_FLASHCARDS_BY_CATEGORY = gql`
+  query GetFlashcardsByCategory($category: String!) {
+    getFlashcardsByCategory(category: $category) {
+      _id
+      question
+      answer
+      category
+    }
+  }
+`;
+
+export const GET_CATEGORIES = gql`
+  query GetCategories {
+    getCategories
+  }
+`;
+
+// UPDATE_FLASHCARD
+export const UPDATE_FLASHCARD = gql`
+  mutation UpdateFlashcard($id: ID!, $question: String, $answer: String, $category: String) {
+    updateFlashcard(id: $id, question: $question, answer: $answer, category: $category) {
+      _id
+      question
+      answer
+      category
+    }
+  }
+`;
+
+// DELETE_FLASHCARD
+export const DELETE_FLASHCARD = gql`
+  mutation DeleteFlashcard($id: ID!) {
+    deleteFlashcard(id: $id) {
+      _id
     }
   }
 `;
