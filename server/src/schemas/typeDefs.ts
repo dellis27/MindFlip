@@ -67,11 +67,8 @@ const typeDefs = gql`
     title: String!
     decks: [ID!]!
     score: Int!
-  }
-
-  input UpdateQuizInput {
-    quizId: ID!
-    deckId: ID!
+    createdBy: String!
+    createdAt: Date!
   }
 
   input FlashcardUpdateInput {
@@ -95,9 +92,6 @@ const typeDefs = gql`
     removeDeck(deckId: ID!): Deck
     updateDeck(input: UpdateDeckInput!): Deck
     createQuiz(input: QuizInput!): Quiz
-    updateQuiz(input: UpdateQuizInput!): Quiz
-    deletedeckfromQuiz(input: UpdateQuizInput!): Quiz
-    removeQuiz(quizId: ID!): Quiz
   }
 `;
 

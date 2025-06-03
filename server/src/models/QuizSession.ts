@@ -1,5 +1,5 @@
 import { Schema, model, Document, Types } from 'mongoose';
-
+import { flashcardSchema } from './Flashcard';
 
 interface IQuiz extends Document {
     user: Types.ObjectId; //username must be created in order to access flashcards and quizzes
@@ -41,5 +41,21 @@ interface IQuiz extends Document {
   
   export const Quiz = model<IQuiz>('Quiz', quizSchema);
   
-
+  // Example function to create pre-made flashcards and quizzes
+  export async function createPreMadeQuiz() {
+    const preMadeFlashcard = new flashcardSchema({
+      question: 'What is the capital of France?',
+      answer: 'Paris',
+      category: 'Geography',
+      createdBy: 'system'
+    });
+    await preMadeFlashcard.save();
   
+    const preMadeQuiz = new Quiz({
+      title: 'Basic Geography Quiz',
+      flashcards: [preMadeFlashcard._id],
+      category: 'Geography',
+      createdBy: 'system'
+    });
+    await preMadeQuiz.save();
+  }
